@@ -13,20 +13,20 @@ type AssetOnChain struct {
 	stub shim.ChaincodeStubInterface
 }
 
-func NewOnChainService(stub shim.ChaincodeStubInterface) *AssetOnChain {
+func NewAssetOnChain(stub shim.ChaincodeStubInterface) *AssetOnChain {
 	return &AssetOnChain{stub}
 }
 
-func (ac *AssetOnChain) Save(asset *pfm.Asset) error {
+func (ac *AssetOnChain) Save(asset *pfm.Asset) (*pfm.Asset, error) {
 	b, err := json.Marshal(asset)
 	if err != nil {
-		return status.ErrInternal.WithError(err)
+		return nil, status.ErrInternal.WithError(err)
 	}
 	err = ac.stub.PutState(asset.Name, b)
 	if err != nil {
-		return status.ErrInternal.WithError(err)
+		return nil, status.ErrInternal.WithError(err)
 	}
-	return nil
+	return asset, nil
 }
 
 func (ac *AssetOnChain) Get(key string) (*pfm.Asset, error) {

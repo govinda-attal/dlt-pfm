@@ -25,6 +25,11 @@ var ErrUnauhtorized = ErrServiceStatus{
 	ServiceStatus{Code: http.StatusUnauthorized, Message: "Unauthorized"},
 }
 
+// ErrNotImplemented represents an unauthorized request error.
+var ErrNotImplemented = ErrServiceStatus{
+	ServiceStatus{Code: http.StatusNotImplemented, Message: "Not Implemented"},
+}
+
 // Success represents a generic success.
 var Success = ServiceStatus{Code: http.StatusOK, Message: "OK"}
 
